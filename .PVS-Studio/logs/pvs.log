@@ -1,0 +1,10 @@
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:64 - ********************************
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:65 - Native library search paths: 
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:948 - /home/saif/.config/PVS-Studio-Java/7.21.64848
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:948 - .
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:948 - /home/saif/.config/PVS-Studio-Java/7.21.64848/..
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:948 - /home/saif/.config/PVS-Studio-Java/7.21.64848/../..
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:948 - /home/saif/.config/PVS-Studio-Java/7.21.64848/../../build
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:67 - Additional path: native/nix
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:76 - Native library found: /home/saif/.config/PVS-Studio-Java/7.21.64848/native/nix/libanalysis-core.so
+2022-11-15 19:00:15 [INFO ] c.p.r.NativeLoader:77 - ********************************
