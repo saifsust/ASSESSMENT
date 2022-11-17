@@ -128,6 +128,11 @@ public final class Customer {
                 + postalZipCode + ',' + phoneNumber + ',' + email + ',' + ipAddress+'\n';
     }
 
+    public String toValue() {
+        return "('"+firstName + "','" + lastName + "','" + city + "','" + state + "','" + postalZipCode + "','" +
+                phoneNumber + "','" + email + "','" + ipAddress+"')";
+    }
+
     public static class Builder {
         private static final String COMA_SEPARATOR = ",";
         private static final String EMPTY = "";

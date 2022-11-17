@@ -1,5 +1,6 @@
 package com.customerprocessor;
 
+import com.customerprocessor.database.MysqlConnector;
 import com.customerprocessor.processor.Executor;
 import com.customerprocessor.util.ReadProcessor;
 import org.apache.commons.logging.Log;
@@ -14,14 +15,15 @@ import java.util.function.Supplier;
 public class ProcessingApplication {
     private static final Log LOGGER = LogFactory.getLog(ProcessingApplication.class);
     private static final Supplier<ReadProcessor> PROCESSOR_SUPPLIER = ReadProcessor::getInstance;
+    private static final Supplier<MysqlConnector> CONNECTOR = MysqlConnector::getInstance;
 
     public static void main(String[] args) throws InterruptedException {
         LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS STARTED"));
         var start = LocalTime.now();
         var preparationPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, true));
-        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, false));
-        while (preparationPool.awaitTermination(1000, TimeUnit.MICROSECONDS));
+        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, CONNECTOR, true));
+        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, CONNECTOR, false));
+        while (preparationPool.awaitTermination(1000, TimeUnit.MICROSECONDS)) ;
         preparationPool.shutdown();
         var end = LocalTime.now();
         LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS ENDED"));
