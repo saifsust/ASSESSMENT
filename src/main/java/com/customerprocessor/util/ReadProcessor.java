@@ -68,10 +68,10 @@ public final class ReadProcessor {
             customers.add(
                     Customer
                     .builder(line.get())
-                    .name()
-                    .branch()
+                    .firstName()
+                    .lastName()
                     .city()
-                    .geoCode()
+                    .state()
                     .postalZipCode()
                     .phoneNumber()
                     .email()

@@ -14,44 +14,44 @@ public final class Customer {
     private static final Pattern WITHOUT_BRACKET = Pattern.compile(WITHOUT_BRACKET_PHONE_NUMBER_CHECKER_PATTERN);
     private static final Pattern WITH_BRACKET = Pattern.compile(WITH_BRACKET_PHONE_NUMBER_CHECKER_PATTERN);
     private static final Pattern EMAIL_MATCHER = Pattern.compile(EMAIL_CHECKER_PATTERN);
-    private String name;
-    private String branch;
+    private String firstName;
+    private String lastName;
     private String city;
-    private String geoCode;
+    private String state;
     private String postalZipCode;
     private String phoneNumber;
     private String email;
     private String ipAddress;
 
-    public Customer(String name, String branch,
-                    String city, String geoCode,
+    public Customer(String firstName, String lastName,
+                    String city, String state,
                     String postalZipCode, String phoneNumber,
                     String email, String ipAddress) {
 
-        this.name = name;
-        this.branch = branch;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.city = city;
-        this.geoCode = geoCode;
+        this.state = state;
         this.postalZipCode = postalZipCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.ipAddress = ipAddress;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getBranch() {
-        return branch;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getCity() {
         return city;
     }
 
-    public String getGeoCode() {
-        return geoCode;
+    public String getState() {
+        return state;
     }
 
     public String getPostalZipCode() {
@@ -79,10 +79,10 @@ public final class Customer {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(getName(), customer.getName()) &&
-                Objects.equals(getBranch(), customer.getBranch()) &&
+        return Objects.equals(getFirstName(), customer.getFirstName()) &&
+                Objects.equals(getLastName(), customer.getLastName()) &&
                 Objects.equals(getCity(), customer.getCity()) &&
-                Objects.equals(getGeoCode(), customer.getGeoCode()) &&
+                Objects.equals(getState(), customer.getState()) &&
                 Objects.equals(getPostalZipCode(), customer.getPostalZipCode()) &&
                 Objects.equals(getPhoneNumber(), customer.getPhoneNumber()) &&
                 Objects.equals(getEmail(), customer.getEmail()) &&
@@ -124,7 +124,7 @@ public final class Customer {
 
     @Override
     public String toString() {
-        return name + ',' + branch + ',' + city + ',' + geoCode + ','
+        return firstName + ',' + lastName + ',' + city + ',' + state + ','
                 + postalZipCode + ',' + phoneNumber + ',' + email + ',' + ipAddress+'\n';
     }
 
@@ -138,10 +138,10 @@ public final class Customer {
                 data.length > indexing.getValue() ?  data[indexing.getValue()] : EMPTY;
 
         private String[] information;
-        private String name;
-        private String branch;
+        private String firstName;
+        private String lastName;
         private String city;
-        private String geoCode;
+        private String state;
         private String postalZipCode;
         private String phoneNumber;
         private String email;
@@ -151,13 +151,13 @@ public final class Customer {
             this.information = line.split(COMA_SEPARATOR);
         }
 
-        public Builder name() {
-            this.name = PRODUCER.apply(information, Indexing.NAME);
+        public Builder firstName() {
+            this.firstName = PRODUCER.apply(information, Indexing.FIRST_NAME);
             return this;
         }
 
-        public Builder branch() {
-            this.branch = PRODUCER.apply(information, Indexing.BRANCH);
+        public Builder lastName() {
+            this.lastName = PRODUCER.apply(information, Indexing.LAST_NAME);
             return this;
         }
 
@@ -166,8 +166,8 @@ public final class Customer {
             return this;
         }
 
-        public Builder geoCode() {
-            this.geoCode = PRODUCER.apply(information, Indexing.GEO_CODE);
+        public Builder state() {
+            this.state = PRODUCER.apply(information, Indexing.STATE);
             return this;
         }
 
@@ -192,8 +192,8 @@ public final class Customer {
         }
 
         public Customer build() {
-            return new Customer(this.name, this.branch,
-                    this.city, this.geoCode,
+            return new Customer(this.firstName, this.lastName,
+                    this.city, this.state,
                     this.postalZipCode, this.phoneNumber,
                     this.email, this.ipAddress);
         }
@@ -203,10 +203,10 @@ public final class Customer {
      * Used to get required index of customer data.
      */
     private enum Indexing {
-        NAME(0),
-        BRANCH(1),
+        FIRST_NAME(0),
+        LAST_NAME(1),
         CITY(2),
-        GEO_CODE(3),
+        STATE(3),
         POSTAL_ZIP_CODE(4),
         PHONE_NUMBER(5),
         EMAIL(6),
