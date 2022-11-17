@@ -1,32 +1,31 @@
 package com.customerprocessor;
 
-import com.customerprocessor.util.FileProcessor;
-import com.customerprocessor.processor.Processor;
+import com.customerprocessor.processor.Executor;
+import com.customerprocessor.util.ReadProcessor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.text.MessageFormat;
 import java.time.LocalTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public class ProcessingApplication {
     private static final Log LOGGER = LogFactory.getLog(ProcessingApplication.class);
-    private static final Supplier<FileProcessor> PROCESSOR_SUPPLIER = FileProcessor::getInstance;
+    private static final Supplier<ReadProcessor> PROCESSOR_SUPPLIER = ReadProcessor::getInstance;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS STARTED"));
         var start = LocalTime.now();
-        var processingValidCustomers = new Processor(PROCESSOR_SUPPLIER, true);
-        var processingInvalidCustomers = new Processor(PROCESSOR_SUPPLIER, false);
-        var processingAllCustomers = new Thread(() -> {
-            var allCustomers = PROCESSOR_SUPPLIER.get().readAllCustomer();
-            LOGGER.info(MessageFormat.format("All Customers : {0}", allCustomers.size()));
-        });
-        processingValidCustomers.start();
-        processingInvalidCustomers.start();
-        processingAllCustomers.start();
+        var preparationPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, true));
+        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, false));
+        while (preparationPool.awaitTermination(1000, TimeUnit.MICROSECONDS));
+        preparationPool.shutdown();
         var end = LocalTime.now();
         LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS ENDED"));
         LOGGER.info(MessageFormat.format("Execution Time : {0} ns", end.getNano() - start.getNano()));
+        LOGGER.info(Runtime.getRuntime().availableProcessors());
     }
 }

@@ -124,16 +124,8 @@ public final class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "name='" + name + '\'' +
-                ", branch='" + branch + '\'' +
-                ", city='" + city + '\'' +
-                ", geoCode='" + geoCode + '\'' +
-                ", postalZipCode='" + postalZipCode + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", ipAddress='" + ipAddress + '\'' +
-                '}';
+        return name + ',' + branch + ',' + city + ',' + geoCode + ','
+                + postalZipCode + ',' + phoneNumber + ',' + email + ',' + ipAddress+'\n';
     }
 
     public static class Builder {
