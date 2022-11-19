@@ -79,14 +79,8 @@ public final class Customer {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(getFirstName(), customer.getFirstName()) &&
-                Objects.equals(getLastName(), customer.getLastName()) &&
-                Objects.equals(getCity(), customer.getCity()) &&
-                Objects.equals(getState(), customer.getState()) &&
-                Objects.equals(getPostalZipCode(), customer.getPostalZipCode()) &&
-                Objects.equals(getPhoneNumber(), customer.getPhoneNumber()) &&
-                Objects.equals(getEmail(), customer.getEmail()) &&
-                Objects.equals(getIpAddress(), customer.getIpAddress());
+        return Objects.equals(getPhoneNumber(), customer.getPhoneNumber()) &&
+                Objects.equals(getEmail(), customer.getEmail());
     }
 
     @Override

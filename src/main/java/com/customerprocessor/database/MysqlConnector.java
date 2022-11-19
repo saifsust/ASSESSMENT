@@ -42,6 +42,15 @@ public class MysqlConnector {
         return Optional.empty();
     }
 
+    public Optional<PreparedStatement> prepareStatement(String query) {
+        try {
+            return Optional.ofNullable(this.connection.prepareStatement(query));
+        } catch (SQLException exception) {
+            LOGGER.error(exception);
+        }
+        return Optional.empty();
+    }
+
     public ResultSet getResultSet(String query) {
         var statement = getStatement();
         if (statement.isPresent()) {

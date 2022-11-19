@@ -1,31 +1,33 @@
 package com.customerprocessor;
 
+import com.customerprocessor.action.Preparation;
 import com.customerprocessor.database.MysqlConnector;
+import com.customerprocessor.model.Customer;
 import com.customerprocessor.model.CustomerType;
-import com.customerprocessor.processor.Executor;
+import com.customerprocessor.processor.InsertionExecutor;
 import com.customerprocessor.util.ReadProcessor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.text.MessageFormat;
 import java.time.LocalTime;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class ProcessingApplication {
     private static final Log LOGGER = LogFactory.getLog(ProcessingApplication.class);
-    private static final Supplier<ReadProcessor> PROCESSOR_SUPPLIER = ReadProcessor::getInstance;
     private static final Supplier<MysqlConnector> CONNECTOR = MysqlConnector::getInstance;
+    private static final Set<Customer> customers = ReadProcessor.getInstance().getAllUniqueCustomers();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
+
         LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS STARTED"));
         var start = LocalTime.now();
-        var preparationPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, CONNECTOR, CustomerType.VALID));
-        preparationPool.submit(new Executor(PROCESSOR_SUPPLIER, CONNECTOR, CustomerType.INVALID));
-        while (preparationPool.awaitTermination(1000, TimeUnit.MICROSECONDS)) ;
-        preparationPool.shutdown();
+        Preparation
+                .prepare()
+                .add(new InsertionExecutor(customers, CONNECTOR, CustomerType.VALID))
+                .add(new InsertionExecutor(customers, CONNECTOR, CustomerType.INVALID))
+                .shutdown();
         var end = LocalTime.now();
         LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS ENDED"));
         LOGGER.info(MessageFormat.format("Execution Time : {0} ns", end.getNano() - start.getNano()));

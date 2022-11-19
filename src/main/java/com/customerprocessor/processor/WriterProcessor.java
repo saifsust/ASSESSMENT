@@ -12,13 +12,13 @@ import java.util.List;
 
 import static com.customerprocessor.constant.Constants.USER_DIRECTORY;
 
-public final class Task extends Thread {
-    private static final Log LOGGER = LogFactory.getLog(Task.class);
+public final class WriterProcessor extends Thread {
+    private static final Log LOGGER = LogFactory.getLog(WriterProcessor.class);
     private final Path path = Paths.get(USER_DIRECTORY, "src/main", "resources", this.getName().concat(".csv"));
     private PrintWriter writer;
     private final List<Customer> customers;
 
-    public Task(List<Customer> customers) {
+    public WriterProcessor(List<Customer> customers) {
         this.customers = customers;
         try {
             this.writer = new PrintWriter(path.toFile());
