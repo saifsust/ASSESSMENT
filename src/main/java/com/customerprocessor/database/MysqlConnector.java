@@ -33,7 +33,7 @@ public class MysqlConnector {
         return instance;
     }
 
-    private Optional<Statement> getStatement() {
+    public Optional<Statement> getStatement() {
         try {
             return Optional.ofNullable(this.connection.createStatement());
         } catch (SQLException exception) {
