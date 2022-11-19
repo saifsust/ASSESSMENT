@@ -45,7 +45,7 @@ public final class FileWriterExecutor extends AbstractExecutor {
                     if(customers.isEmpty()){
                         break;
                     }
-                    getRunner().add(new WriterProcessor(customers));
+                    getRunner().add(new WriterProcessor(customers, getCustomerType()));
                 }
                 statement.get().close();
             } catch (SQLException exception) {

@@ -1,12 +1,12 @@
 package com.customerprocessor.processor;
 
 import com.customerprocessor.model.Customer;
+import com.customerprocessor.model.CustomerType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -17,12 +17,12 @@ public final class WriterProcessor extends Thread {
     private PrintWriter writer;
     private final List<Customer> customers;
 
-    public WriterProcessor(List<Customer> customers) {
+    public WriterProcessor(List<Customer> customers, CustomerType customerType) {
         super.setName("Thread Writer_"+this.getId());
         this.customers = customers;
         try {
             this.writer = new PrintWriter(Paths.get(USER_DIRECTORY, "src/main", "resources",
-                    this.getName().concat(".csv")).toFile());
+                    this.getName().concat(customerType.getTable()).concat(".csv")).toFile());
         } catch (FileNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
