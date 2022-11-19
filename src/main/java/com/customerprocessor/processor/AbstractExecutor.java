@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Supplier;
 
+import static com.customerprocessor.constant.Constants.FILE_WRITE_PARTITION_SIZE;
 import static com.customerprocessor.constant.Constants.PARTITION_SIZE;
 
 public abstract class AbstractExecutor extends Thread {
@@ -50,7 +51,7 @@ public abstract class AbstractExecutor extends Thread {
 
     protected String query(int start) {
         return String
-                .format("SELECT * FROM oragetoolz.%s LIMIT %s,%s", customerType.getTable(),start, PARTITION_SIZE);
+                .format("SELECT * FROM oragetoolz.%s LIMIT %s,%s", customerType.getTable(),start, FILE_WRITE_PARTITION_SIZE);
     }
 
     public ConcurrentLinkedQueue<Thread> getRunner() {
@@ -60,7 +61,7 @@ public abstract class AbstractExecutor extends Thread {
     protected void parallelism(){
         while (!runner.isEmpty()){
             if(Thread.activeCount() < Runtime.getRuntime().availableProcessors()){
-                System.out.printf("======================= running ========================\n thread name :  %s activated: %d\n" , this.getName(), Thread.activeCount());
+                System.out.printf("Activated: %d\n" , Thread.activeCount());
                 var thread = runner.poll();
                 thread.start();
             }

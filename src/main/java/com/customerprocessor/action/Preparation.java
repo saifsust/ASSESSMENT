@@ -1,6 +1,8 @@
 package com.customerprocessor.action;
 
 
+import com.customerprocessor.exception.ApplicationException;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -21,9 +23,9 @@ public class Preparation {
         pool.shutdown();
         while (true) {
             try {
-                if (!pool.awaitTermination(22, TimeUnit.MINUTES)) break;
+                if (!pool.awaitTermination(22, TimeUnit.SECONDS)) break;
             } catch (InterruptedException exception) {
-                exception.printStackTrace();
+                throw new ApplicationException(exception);
             }
         }
         pool.shutdownNow();

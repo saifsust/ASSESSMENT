@@ -31,16 +31,13 @@ public final class InsertionExecutor extends AbstractExecutor {
                 .stream()
                 .filter(customer -> !(customer.isValid() ^ getCustomerType().isEqual(CustomerType.VALID)))
                 .collect(Collectors.toList());
-       // var pool = ProcessorPool.getInstance();
         for (int index = 0; index < filteredCustomers.size(); index += PARTITION_SIZE) {
             getRunner().add(new InserterProcessor(index, Math.min(index + PARTITION_SIZE, filteredCustomers.size()),
                     filteredCustomers, getConnector().get().prepareStatement(query())) );
-//            pool.submit(new InserterProcessor(index, Math.min(index + PARTITION_SIZE, filteredCustomers.size()),
-//                    filteredCustomers, getConnector().get().prepareStatement(query())));
         }
 
         parallelism();
         getLOGGER().info("Submitted all Threads");
-      //  pool.shutDown();
+        this.stop();
     }
 }

@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import static com.customerprocessor.constant.Constants.PARTITION_SIZE;
+
 public final class InserterProcessor extends Thread{
     private static final Log LOGGER = LogFactory.getLog(InserterProcessor.class);
     private final int start;
@@ -24,10 +26,12 @@ public final class InserterProcessor extends Thread{
         this.customers = customers;
         this.statement = statement;
         super.setPriority(1);
+        super.setName("Thread PART - ".concat(String.valueOf(start)));
     }
 
     @Override
     public void run() {
+        System.out.printf("====================== running thread ================== \n %s\n", this.getName());
         try {
             var statement = this.statement.get();
 
@@ -49,5 +53,6 @@ public final class InserterProcessor extends Thread{
             LOGGER.error(exception);
         }
         LOGGER.info(String.format("Successfully inserted all customers. %d %d",this.start, this.end));
+        this.stop();
     }
 }

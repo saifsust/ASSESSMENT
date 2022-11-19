@@ -74,6 +74,10 @@ public final class Customer {
         return new Builder(line);
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,6 +109,17 @@ public final class Customer {
     private boolean isValidPhoneNumber(){
         return WITHOUT_BRACKET.matcher(this.phoneNumber).find() ||
                 WITH_BRACKET.matcher(this.phoneNumber).find();
+    }
+
+    public boolean isEmpty() {
+        return this.firstName.isEmpty() &&
+                this.lastName.isEmpty() &&
+                this.city.isEmpty() &&
+                this.state.isEmpty() &&
+                this.phoneNumber.isEmpty() &&
+                this.email.isEmpty() &&
+                this.postalZipCode.isEmpty() &&
+                this.ipAddress.isEmpty();
     }
 
     /**
@@ -146,6 +161,10 @@ public final class Customer {
         private String email;
         private String ipAddress;
 
+        private Builder(){
+
+        }
+
         private Builder(String line) {
             this.information = line.split(COMA_SEPARATOR);
         }
@@ -155,8 +174,18 @@ public final class Customer {
             return this;
         }
 
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
         public Builder lastName() {
             this.lastName = PRODUCER.apply(information, Indexing.LAST_NAME);
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
             return this;
         }
 
@@ -165,13 +194,29 @@ public final class Customer {
             return this;
         }
 
+        public Builder city(String city) {
+            this.city = city;
+            return this;
+        }
+
         public Builder state() {
             this.state = PRODUCER.apply(information, Indexing.STATE);
             return this;
         }
 
+        public Builder state(String state) {
+            this.state = state;
+            return this;
+        }
+
+
         public Builder postalZipCode() {
             this.postalZipCode = PRODUCER.apply(information, Indexing.POSTAL_ZIP_CODE);
+            return this;
+        }
+
+        public Builder postalZipCode(String postalZipCode) {
+            this.postalZipCode = postalZipCode;
             return this;
         }
 
@@ -180,13 +225,28 @@ public final class Customer {
             return this;
         }
 
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
         public Builder email() {
             this.email = PRODUCER.apply(information, Indexing.EMAIL);
             return this;
         }
 
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
         public Builder ipAddress() {
             this.ipAddress = PRODUCER.apply(information, Indexing.IP_ADDRESS);
+            return this;
+        }
+
+        public Builder ipAddress(String ipAddress) {
+            this.ipAddress = ipAddress;
             return this;
         }
 

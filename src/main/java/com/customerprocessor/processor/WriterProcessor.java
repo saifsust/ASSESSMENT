@@ -14,14 +14,15 @@ import static com.customerprocessor.constant.Constants.USER_DIRECTORY;
 
 public final class WriterProcessor extends Thread {
     private static final Log LOGGER = LogFactory.getLog(WriterProcessor.class);
-    private final Path path = Paths.get(USER_DIRECTORY, "src/main", "resources", this.getName().concat(".csv"));
     private PrintWriter writer;
     private final List<Customer> customers;
 
     public WriterProcessor(List<Customer> customers) {
+        super.setName("Thread Writer_"+this.getId());
         this.customers = customers;
         try {
-            this.writer = new PrintWriter(path.toFile());
+            this.writer = new PrintWriter(Paths.get(USER_DIRECTORY, "src/main", "resources",
+                    this.getName().concat(".csv")).toFile());
         } catch (FileNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
@@ -29,6 +30,7 @@ public final class WriterProcessor extends Thread {
 
     @Override
     public void run() {
+        System.out.printf("====================== running thread ================== \n %s\n", this.getName());
         LOGGER.info(String.format("part size : %d \n",customers.size()));
         customers.forEach(customer -> this.writer.write(customer.toString()));
         this.writer.close();

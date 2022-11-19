@@ -1,35 +1,26 @@
 package com.customerprocessor;
 
-import com.customerprocessor.action.Preparation;
-import com.customerprocessor.database.MysqlConnector;
-import com.customerprocessor.model.Customer;
-import com.customerprocessor.model.CustomerType;
-import com.customerprocessor.processor.InsertionExecutor;
-import com.customerprocessor.util.ReadProcessor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.customerprocessor.action.Insertion;
+import com.customerprocessor.action.Partition;
 
-import java.text.MessageFormat;
-import java.time.LocalTime;
-import java.util.Set;
-import java.util.function.Supplier;
+import java.util.Scanner;
 
 public class ProcessingApplication {
-    private static final Log LOGGER = LogFactory.getLog(ProcessingApplication.class);
-    private static final Supplier<MysqlConnector> CONNECTOR = MysqlConnector::getInstance;
-    private static final Set<Customer> customers = ReadProcessor.getInstance().getAllUniqueCustomers();
 
     public static void main(String[] args) {
 
-        LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS STARTED"));
-        var start = LocalTime.now();
-        Preparation
-                .prepare()
-                .add(new InsertionExecutor(customers, CONNECTOR, CustomerType.VALID))
-                .add(new InsertionExecutor(customers, CONNECTOR, CustomerType.INVALID))
-                .shutdown();
-        var end = LocalTime.now();
-        LOGGER.info(MessageFormat.format("{0}", "APPLICATION IS ENDED"));
-        LOGGER.info(MessageFormat.format("Execution Time : {0} ns", end.getNano() - start.getNano()));
+        Scanner read = new Scanner(System.in);
+        System.out.println("Enter 1 for insertion and 2 for file partition: ");
+        while (read.hasNext()) {
+            switch (read.nextInt()) {
+                case 1:
+                    Insertion.start();
+                    break;
+                case 2:
+                    Partition.start();
+                default:
+                    return;
+            }
+        }
     }
 }
