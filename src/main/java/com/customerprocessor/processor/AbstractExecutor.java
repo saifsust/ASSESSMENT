@@ -11,7 +11,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Supplier;
 
 import static com.customerprocessor.constant.Constants.FILE_WRITE_PARTITION_SIZE;
-import static com.customerprocessor.constant.Constants.PARTITION_SIZE;
 
 public abstract class AbstractExecutor extends Thread {
     private static final Log LOGGER = LogFactory.getLog(AbstractExecutor.class);

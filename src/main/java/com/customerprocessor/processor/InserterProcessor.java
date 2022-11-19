@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.customerprocessor.constant.Constants.PARTITION_SIZE;
-
 public final class InserterProcessor extends Thread{
     private static final Log LOGGER = LogFactory.getLog(InserterProcessor.class);
     private final int start;

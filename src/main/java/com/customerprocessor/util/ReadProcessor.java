@@ -7,7 +7,9 @@ import org.apache.commons.logging.LogFactory;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.customerprocessor.constant.Constants.USER_DIRECTORY;
 

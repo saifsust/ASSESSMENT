@@ -4,7 +4,6 @@ import com.customerprocessor.ProcessingApplication;
 import com.customerprocessor.database.MysqlConnector;
 import com.customerprocessor.model.CustomerType;
 import com.customerprocessor.processor.FileWriterExecutor;
-import com.customerprocessor.processor.InsertionExecutor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
