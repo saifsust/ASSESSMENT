@@ -24,7 +24,7 @@ public final class FileWriterExecutor extends AbstractExecutor {
             int start = 0;
             try {
 
-                while (true) {
+                while (start < 100000) {
                     var resultSet = statement.get().executeQuery(query(start));
                     var customers = new ArrayList<Customer>();
                     while (resultSet.next()) {
@@ -41,18 +41,17 @@ public final class FileWriterExecutor extends AbstractExecutor {
                                 .build());
 
                     }
-                    if (customers.isEmpty()) {
+                    start += FILE_WRITE_PARTITION_SIZE;
+                    if(customers.isEmpty()){
                         break;
                     }
-                    start += FILE_WRITE_PARTITION_SIZE;
-                    System.out.println(customers);
                     getRunner().add(new WriterProcessor(customers));
                 }
+                statement.get().close();
             } catch (SQLException exception) {
                 throw new ApplicationException(exception);
             }
         }
-
         parallelism();
         getLOGGER().info("Submitted all Threads");
         this.stop();
