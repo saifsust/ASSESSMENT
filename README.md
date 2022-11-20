@@ -32,6 +32,11 @@ public class MysqlConnector {
     /** hide other codes**/
 }
 ```
+### Execution procedure
+just create jar and used following cmd.
+```roomsql
+java -jar ASSESSMENT-1.0-SNAPSHOT.jar 
+```
 
 ### Checking Results
 1. input file is store into following directory:
