@@ -3,6 +3,7 @@
 - It is a multi-threading project using core java and Mysq.
 - Enter 1 for insert data into mysql table name customers. Customers divided into two parts one is for valid customers name valid_customers and other is invalid_customers for invalid customers.
 - Valid and  Invalid customers separate by using email and phone numbers.
+- Enter 2 for splitting customer's information concurrently within separate files. 
 - Here have been used Chain of Responsible pattern for multi-threading, Builder pattern for customers and Adapter pattern for pooling threads.
 
 ### Preparation
