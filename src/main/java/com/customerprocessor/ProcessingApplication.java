@@ -15,10 +15,9 @@ public class ProcessingApplication {
             switch (read.nextInt()) {
                 case 1:
                     Insertion.start();
-                    break;
+                    return;
                 case 2:
                     Partition.start();
-                default:
                     return;
             }
         }
