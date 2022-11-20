@@ -51,6 +51,5 @@ public final class InserterProcessor extends Thread{
             LOGGER.error(exception);
         }
         LOGGER.info(String.format("Successfully inserted all customers. %d %d",this.start, this.end));
-        this.stop();
     }
 }

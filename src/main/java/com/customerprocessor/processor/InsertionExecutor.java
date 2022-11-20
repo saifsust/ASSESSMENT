@@ -38,6 +38,5 @@ public final class InsertionExecutor extends AbstractExecutor {
 
         parallelism();
         getLOGGER().info("Submitted all Threads");
-        this.stop();
     }
 }
