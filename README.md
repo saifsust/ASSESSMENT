@@ -7,16 +7,16 @@
 
 ### Preparation
 1. create database using following Mysql DDL:
-```shell
+```jql
  CREATE DATABASE oragetoolz;
 ```
 2. create table for valid customers using following mysql DDL:
-```shell
+```jql
 create table valid_customers(first_name varchar(100), last_name varchar(100), city varchar(100),
 state varchar(100),postal_zip_code varchar(20), phone_number varchar(50), email varchar(100), ip_address varchar(30));
 ```
 3. create table for invalid customers using following mysql DDL:
-```shell
+```jql
 create table invalid_customers(first_name varchar(100), last_name varchar(100), city varchar(100),
 state varchar(100),postal_zip_code varchar(20), phone_number varchar(50), email varchar(100), ip_address varchar(30));
 ```
