@@ -54,12 +54,6 @@ public final class FileWriterExecutor extends AbstractExecutor {
             }
             parallelism();
             getLOGGER().info("Submitted all Threads");
-            try {
-                statement.get().close();
-            } catch (SQLException exception) {
-                getLOGGER().error(exception);
-            }
-            getConnector().get().close();
         }
     }
 }
