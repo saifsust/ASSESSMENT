@@ -21,16 +21,12 @@ state varchar(100),postal_zip_code varchar(20), phone_number varchar(50), email 
 create table invalid_customers(first_name varchar(100), last_name varchar(100), city varchar(100),
 state varchar(100),postal_zip_code varchar(20), phone_number varchar(50), email varchar(100), ip_address varchar(30));
 ```
-4. change MysqlConnector properties according to your mysql configuration:
-```java
-public class MysqlConnector {
-    private static final Log LOGGER = LogFactory.getLog(MysqlConnector.class);
-    private static final String URL = "jdbc:mysql://localhost:3306/oragetoolz";
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static  final String username = "admin";
-    private static final String password = "admin";
-    /** hide other codes**/
-}
+4. change application.properties file according to your mysql configuration:
+```properties
+jdbc.url=jdbc:mysql://localhost:3306/oragetoolz
+jdbc.username=admin
+jdbc.password=admin
+jdbc.drive=com.mysql.cj.jdbc.Driver
 ```
 ### Execution procedure
 just create jar and used following cmd.
