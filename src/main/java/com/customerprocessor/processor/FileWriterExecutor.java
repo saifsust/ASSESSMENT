@@ -24,7 +24,7 @@ public final class FileWriterExecutor extends AbstractExecutor {
             if (statement.isPresent()) {
                 int start = 0;
                 try {
-                    while (start < 100000) {
+                    while (true) {
                         var resultSet = statement.get().executeQuery(query(start));
                         var customers = new ArrayList<Customer>();
                         while (resultSet.next()) {
